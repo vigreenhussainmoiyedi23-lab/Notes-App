@@ -6,7 +6,7 @@ import NoteCard from "./components/NoteCard";
 const App = () => {
   const [notes, setNotes] = useState([]);
   function fetchData() {
-    axios.get("http://localhost:3000/api/notes").then((res) => {
+    axios.get("https://notes-app-bkhq.onrender.com/api/notes").then((res) => {
       setNotes(res.data.notes);
     });
   }
@@ -15,19 +15,19 @@ const App = () => {
   }, []);
   const editHandler = async (id, description) => {
     axios
-      .patch(`http://localhost:3000/api/notes/${id}`, { description })
+      .patch(`https://notes-app-bkhq.onrender.com/api/notes/${id}`, { description })
       .then((res) => {
         fetchData();
       });
   };
   const deleteHandler = async (id) => {
-    axios.delete(`http://localhost:3000/api/notes/${id}`).then((res) => {
+    axios.delete(`https://notes-app-bkhq.onrender.com/api/notes/${id}`).then((res) => {
       fetchData();
     });
   };
 
   const CreateHander = async () => {
-    axios.post("http://localhost:3000/api/notes", NoteInput).then((res) => {
+    axios.post("https://notes-app-bkhq.onrender.com/api/notes", NoteInput).then((res) => {
       setNotes((prev) => {
         return [...prev, res.data.note];
       });
