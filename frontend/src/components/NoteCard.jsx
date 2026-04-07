@@ -1,11 +1,10 @@
 import React from "react";
 import { useState } from "react";
 
-const NoteCard = ({ note, idx,editHandler,deleteHandler }) => {
+const NoteCard = ({ note, idx, editHandler, deleteHandler }) => {
   const [editData, setEditData] = useState({
     description: note.description || "",
   });
-
   const [isEditting, setIsEditting] = useState(false);
   return (
     <div key={idx} className="note relative">
@@ -16,7 +15,7 @@ const NoteCard = ({ note, idx,editHandler,deleteHandler }) => {
         <button
           onClick={() => {
             if (isEditting) {
-                editHandler(note._id,editData.description)
+              editHandler(note._id, editData.description);
             }
             setIsEditting((prev) => !prev);
           }}

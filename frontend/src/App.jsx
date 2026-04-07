@@ -4,47 +4,26 @@ import axios from "axios";
 import { useEffect } from "react";
 import NoteCard from "./components/NoteCard";
 const App = () => {
-  const [notes, setNotes] = useState([
-    {
-      title: "kuch title 1",
-      description: "kuch description",
-    },
-    {
-      title: "kuch title 2",
-      description: "kuch description",
-    },
-    {
-      title: "kuch title 3",
-      description: "kuch description",
-    },
-    {
-      title: "kuch title 4",
-      description: "kuch description",
-    },
-  ]);
-  useEffect(() => {
+  const [notes, setNotes] = useState([]);
+  function fetchData() {
     axios.get("http://localhost:3000/api/notes").then((res) => {
       setNotes(res.data.notes);
     });
+  }
+  useEffect(() => {
+    fetchData();
   }, []);
   const editHandler = async (id, description) => {
     axios
       .patch(`http://localhost:3000/api/notes/${id}`, { description })
       .then((res) => {
-        let idx = notes.findIndex((n) => n._id.toString() == id.toString());
-        if(idx==-1)return 
-        let newNotes=notes.splice(idx, 1, res.data.note); 
-        setNotes(newNotes)
+        fetchData();
       });
   };
   const deleteHandler = async (id) => {
-    axios
-      .delete(`http://localhost:3000/api/notes/${id}`)
-      .then((res) => {
-        let idx = notes.findIndex((n) => n._id.toString() == id.toString());
-        let newNotes=notes.splice(idx, 1);
-        setNotes(newNotes)
-      });
+    axios.delete(`http://localhost:3000/api/notes/${id}`).then((res) => {
+      fetchData();
+    });
   };
 
   const CreateHander = async () => {
@@ -63,7 +42,7 @@ const App = () => {
     title: "",
     description: "",
   });
-
+  console.log("rendered");
   return (
     <>
       <form
